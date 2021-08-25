@@ -2,13 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9eb1460-c84f-4ec5-b245-35c52da479db" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/Company.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/StockInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/app.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/StockCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/StockCrawler.java" afterDir="false" />
@@ -70,7 +78,7 @@
       <updated>1629557219443</updated>
       <workItem from="1629557224434" duration="3522000" />
       <workItem from="1629613857803" duration="69000" />
-      <workItem from="1629899468076" duration="3741000" />
+      <workItem from="1629899468076" duration="11233000" />
     </task>
     <servers />
   </component>
@@ -78,25 +86,33 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="2006" height="329" key="GridCell.Tab.0.bottom" timestamp="1629903344152">
+    <state x="837" y="299" key="#com.intellij.ide.util.MemberChooser" timestamp="1629909609979">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
-    <state width="2006" height="329" key="GridCell.Tab.0.bottom/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629903344152" />
-    <state width="2006" height="329" key="GridCell.Tab.0.center" timestamp="1629903344151">
+    <state x="837" y="299" key="#com.intellij.ide.util.MemberChooser/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629909609979" />
+    <state width="2006" height="546" key="GridCell.Tab.0.bottom" timestamp="1629910955106">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
-    <state width="2006" height="329" key="GridCell.Tab.0.center/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629903344151" />
-    <state width="2006" height="329" key="GridCell.Tab.0.left" timestamp="1629903344150">
+    <state width="2006" height="546" key="GridCell.Tab.0.bottom/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629910955106" />
+    <state width="2006" height="546" key="GridCell.Tab.0.center" timestamp="1629910955105">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
-    <state width="2006" height="329" key="GridCell.Tab.0.left/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629903344150" />
-    <state width="2006" height="329" key="GridCell.Tab.0.right" timestamp="1629903344152">
+    <state width="2006" height="546" key="GridCell.Tab.0.center/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629910955105" />
+    <state width="2006" height="546" key="GridCell.Tab.0.left" timestamp="1629910955104">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
-    <state width="2006" height="329" key="GridCell.Tab.0.right/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629903344152" />
+    <state width="2006" height="546" key="GridCell.Tab.0.left/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629910955104" />
+    <state width="2006" height="546" key="GridCell.Tab.0.right" timestamp="1629910955106">
+      <screen x="0" y="0" width="2048" height="1152" />
+    </state>
+    <state width="2006" height="546" key="GridCell.Tab.0.right/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629910955106" />
     <state x="621" y="189" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1629560187193">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
     <state x="621" y="189" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629560187193" />
+    <state x="689" y="259" width="670" height="676" key="search.everywhere.popup" timestamp="1629906226827">
+      <screen x="0" y="0" width="2048" height="1152" />
+    </state>
+    <state x="689" y="259" width="670" height="676" key="search.everywhere.popup/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629906226827" />
   </component>
 </project>

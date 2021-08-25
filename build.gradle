@@ -17,6 +17,9 @@ dependencies {
     // HTML Parser
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.14.2'
 
+    // Json Parser
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4'
+
     // logging
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
     testImplementation group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.32'
