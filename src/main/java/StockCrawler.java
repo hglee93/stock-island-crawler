@@ -3,9 +3,12 @@ import Entity.StockInfo;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.apache.log4j.PropertyConfigurator;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -13,6 +16,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 public class StockCrawler {
@@ -20,6 +24,8 @@ public class StockCrawler {
     private final String KRX_URL;
 
     private final String NAVER_FINANCE_URL;
+
+    private static final Logger log = LoggerFactory.getLogger(StockCrawler.class);
 
     public StockCrawler() throws IOException {
 
@@ -29,6 +35,9 @@ public class StockCrawler {
 
         KRX_URL = appProps.getProperty("crawling.target.url.krx");
         NAVER_FINANCE_URL = appProps.getProperty("crawling.target.url.naverfinance");
+
+        String log4jConfPath = "/Users/heegwan/Documents/Workspace/stock-island-crawler/log4j.properties";
+        PropertyConfigurator.configure(log4jConfPath);
     }
 
     public List<Company> getCompanyCodeList() throws IOException {
@@ -88,6 +97,93 @@ public class StockCrawler {
         return stockInfoList;
     }
 
+    public List<StockInfo> getStockInfo(List<Company> companyList, int threadCount) throws IOException, ExecutionException, InterruptedException {
+
+        int stepSize = companyList.size() / threadCount;
+
+        List<StockInfo> stockInfoList = new ArrayList<>();
+        List<CompletableFuture<List<StockInfo>>> futures = new ArrayList<>();
+
+        for(int i = 0; i < threadCount; i++) {
+
+            List<Company> targets = companyList.subList(i * stepSize, (i + 1) * stepSize);
+
+            CompletableFuture<List<StockInfo>> future = CompletableFuture.supplyAsync(() -> {
+
+                List<StockInfo> sublist = new ArrayList<>();
+
+                for(Company target : targets) {
+                    StockInfo stockInfo = crawlStockInfoFromNaver(target);
+                    sublist.add(stockInfo);
+                }
+
+                return sublist;
+            });
+
+            futures.add(future);
+        }
+
+        for(int i = 0; i < threadCount; i++) {
+            List<StockInfo> sublist = futures.get(i).get();
+            stockInfoList.addAll(sublist);
+        }
+
+        return stockInfoList;
+    }
+
+    public List<StockInfo> getStockInfoExecutionService(List<Company> companyList, int threadCount) throws IOException, ExecutionException, InterruptedException {
+
+        ExecutorService executor = Executors.newFixedThreadPool(threadCount);
+
+        List<CompletableFuture<StockInfo>> collect = companyList.parallelStream()
+                .map(company -> { return CompletableFuture.supplyAsync(() -> crawlStockInfoFromNaver(company), executor); })
+                .collect(Collectors.toList());
+
+        executor.shutdown();
+
+        return collect.stream().map(future -> {
+            StockInfo stockInfo = new StockInfo();
+            try {
+                stockInfo = future.get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            return stockInfo;
+        }).collect(Collectors.toList());
+
+    }
+
+    public StockInfo crawlStockInfoFromNaver(Company company) {
+
+        String crawlingUrl = NAVER_FINANCE_URL + "?itemcode=" + company.getCode();
+
+        HttpURLConnection urlConnection = null;
+        StockInfo.StockInfoBuilder builder = new StockInfo.StockInfoBuilder(company.getCode(), company.getName());
+        try {
+            urlConnection = requestHttpRequest(crawlingUrl, "GET");
+            String json = convertInputStreamToString(urlConnection.getInputStream(), StandardCharsets.UTF_8.name());
+
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(json);
+
+            builder.marketSum(jsonNode.get("marketSum").asLong())
+                    .now(jsonNode.get("now").asLong())
+                    .diff(jsonNode.get("diff").asLong())
+                    .rate(jsonNode.get("rate").asDouble())
+                    .quantity(jsonNode.get("quant").asLong())
+                    .high(jsonNode.get("high").asLong())
+                    .low(jsonNode.get("low").asLong())
+                    .tradingTime(LocalDateTime.now())
+                    .build();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        return builder.build();
+    }
+
     public HttpURLConnection requestHttpRequest(String requestUrl, String requestMethod) throws IOException {
         URL url = new URL(requestUrl);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -107,16 +203,30 @@ public class StockCrawler {
 
         try {
             StockCrawler stockCrawler = new StockCrawler();
-
             List<Company> companyCodeList = stockCrawler.getCompanyCodeList();
-            List<StockInfo> stockInfoList = stockCrawler.getStockInfo(companyCodeList);
+            List<StockInfo> stockInfoList = new ArrayList<>();
 
-            for(StockInfo stockInfo : stockInfoList) {
-                System.out.println(stockInfo.toString());
-            }
+            long startTime = System.currentTimeMillis();
+            stockInfoList = stockCrawler.getStockInfo(companyCodeList);
+            long endTime = System.currentTimeMillis();
+            log.info("Execution Time: {} sec", (double)((endTime - startTime) / 1000d));
+
+            startTime = System.currentTimeMillis();
+            stockInfoList = stockCrawler.getStockInfo(companyCodeList, 16);
+            endTime = System.currentTimeMillis();
+            log.info("Execution Time: {} sec", (double)((endTime - startTime) / 1000d));
+
+            startTime = System.currentTimeMillis();
+            stockInfoList = stockCrawler.getStockInfoExecutionService(companyCodeList, 16);
+            endTime = System.currentTimeMillis();
+            log.info("Thread Count: {}, Execution Time: {} sec", (double)((endTime - startTime) / 1000d));
 
         } catch (IOException e) {
             System.out.println("getMessage : " + e.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
 
     }

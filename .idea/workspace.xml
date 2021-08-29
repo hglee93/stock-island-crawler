@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9eb1460-c84f-4ec5-b245-35c52da479db" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/Company.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Entity/StockInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/app.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/log4j.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -13,10 +11,6 @@
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/6.1.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/StockCrawler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/StockCrawler.java" afterDir="false" />
@@ -51,6 +45,14 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="StockCrawler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -78,7 +80,9 @@
       <updated>1629557219443</updated>
       <workItem from="1629557224434" duration="3522000" />
       <workItem from="1629613857803" duration="69000" />
-      <workItem from="1629899468076" duration="11233000" />
+      <workItem from="1629899468076" duration="11355000" />
+      <workItem from="1630150105661" duration="2389000" />
+      <workItem from="1630208126663" duration="9897000" />
     </task>
     <servers />
   </component>
@@ -90,26 +94,62 @@
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
     <state x="837" y="299" key="#com.intellij.ide.util.MemberChooser/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629909609979" />
-    <state width="2006" height="546" key="GridCell.Tab.0.bottom" timestamp="1629910955106">
-      <screen x="0" y="0" width="2048" height="1152" />
+    <state width="1398" height="336" key="GridCell.Tab.0.bottom" timestamp="1630219337893">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="2006" height="546" key="GridCell.Tab.0.bottom/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629910955106" />
-    <state width="2006" height="546" key="GridCell.Tab.0.center" timestamp="1629910955105">
-      <screen x="0" y="0" width="2048" height="1152" />
+    <state width="1398" height="336" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1630219337893" />
+    <state width="2006" height="371" key="GridCell.Tab.0.bottom/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1630157000587" />
+    <state width="2006" height="546" key="GridCell.Tab.0.bottom/2048.320.1440.877/0.0.2048.1152@0.0.2048.1152" timestamp="1629911233005" />
+    <state width="2006" height="371" key="GridCell.Tab.0.bottom/2048.320.1440.877/0.23.2048.1058@0.23.2048.1058" timestamp="1630157716990" />
+    <state width="1398" height="336" key="GridCell.Tab.0.center" timestamp="1630219337892">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="2006" height="546" key="GridCell.Tab.0.center/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629910955105" />
-    <state width="2006" height="546" key="GridCell.Tab.0.left" timestamp="1629910955104">
-      <screen x="0" y="0" width="2048" height="1152" />
+    <state width="1398" height="336" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1630219337892" />
+    <state width="2006" height="371" key="GridCell.Tab.0.center/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1630157000586" />
+    <state width="2006" height="546" key="GridCell.Tab.0.center/2048.320.1440.877/0.0.2048.1152@0.0.2048.1152" timestamp="1629911233003" />
+    <state width="2006" height="371" key="GridCell.Tab.0.center/2048.320.1440.877/0.23.2048.1058@0.23.2048.1058" timestamp="1630157716989" />
+    <state width="1398" height="336" key="GridCell.Tab.0.left" timestamp="1630219337891">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="2006" height="546" key="GridCell.Tab.0.left/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629910955104" />
-    <state width="2006" height="546" key="GridCell.Tab.0.right" timestamp="1629910955106">
-      <screen x="0" y="0" width="2048" height="1152" />
+    <state width="1398" height="336" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1630219337891" />
+    <state width="2006" height="371" key="GridCell.Tab.0.left/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1630157000585" />
+    <state width="2006" height="546" key="GridCell.Tab.0.left/2048.320.1440.877/0.0.2048.1152@0.0.2048.1152" timestamp="1629911233001" />
+    <state width="2006" height="371" key="GridCell.Tab.0.left/2048.320.1440.877/0.23.2048.1058@0.23.2048.1058" timestamp="1630157716988" />
+    <state width="1398" height="336" key="GridCell.Tab.0.right" timestamp="1630219337893">
+      <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="2006" height="546" key="GridCell.Tab.0.right/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629910955106" />
+    <state width="1398" height="336" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1630219337893" />
+    <state width="2006" height="371" key="GridCell.Tab.0.right/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1630157000587" />
+    <state width="2006" height="546" key="GridCell.Tab.0.right/2048.320.1440.877/0.0.2048.1152@0.0.2048.1152" timestamp="1629911233004" />
+    <state width="2006" height="371" key="GridCell.Tab.0.right/2048.320.1440.877/0.23.2048.1058@0.23.2048.1058" timestamp="1630157716990" />
+    <state width="1398" height="304" key="GridCell.Tab.1.bottom" timestamp="1630217031302">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="304" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1630217031302" />
+    <state width="1398" height="304" key="GridCell.Tab.1.center" timestamp="1630217031300">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="304" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1630217031300" />
+    <state width="1398" height="304" key="GridCell.Tab.1.left" timestamp="1630217031299">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="304" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1630217031299" />
+    <state width="1398" height="304" key="GridCell.Tab.1.right" timestamp="1630217031301">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1398" height="304" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1630217031301" />
+    <state x="208" y="23" width="1024" height="806" key="SettingsEditor" timestamp="1630212097464">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="208" y="23" width="1024" height="806" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1630212097464" />
     <state x="621" y="189" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1629560187193">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
     <state x="621" y="189" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1629560187193" />
+    <state x="623" y="188" key="new project wizard" timestamp="1630157199306">
+      <screen x="0" y="0" width="2048" height="1152" />
+    </state>
+    <state x="623" y="188" key="new project wizard/2048.297.1440.900/0.0.2048.1152@0.0.2048.1152" timestamp="1630157199306" />
     <state x="689" y="259" width="670" height="676" key="search.everywhere.popup" timestamp="1629906226827">
       <screen x="0" y="0" width="2048" height="1152" />
     </state>
