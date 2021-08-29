@@ -25,6 +25,8 @@ public class StockCrawler {
 
     private final String NAVER_FINANCE_URL;
 
+    private final int THREAD_COUNT;
+
     private static final Logger log = LoggerFactory.getLogger(StockCrawler.class);
 
     public StockCrawler() throws IOException {
@@ -35,6 +37,7 @@ public class StockCrawler {
 
         KRX_URL = appProps.getProperty("crawling.target.url.krx");
         NAVER_FINANCE_URL = appProps.getProperty("crawling.target.url.naverfinance");
+        THREAD_COUNT = Integer.parseInt(appProps.getProperty("crawling.thread.count"));
 
         String log4jConfPath = "/Users/heegwan/Documents/Workspace/stock-island-crawler/log4j.properties";
         PropertyConfigurator.configure(log4jConfPath);
@@ -66,34 +69,33 @@ public class StockCrawler {
         return companyList;
     }
 
-    public List<StockInfo> getStockInfo(List<Company> companyList) throws IOException {
+    public List<StockInfo> getStockInfo(List<Company> companyList) {
 
-        List<StockInfo> stockInfoList = new ArrayList<>();
+        ExecutorService executor = Executors.newFixedThreadPool(THREAD_COUNT);
 
-        for(Company company : companyList){
+        List<CompletableFuture<StockInfo>> collect = companyList.parallelStream()
+                .map(company -> CompletableFuture.supplyAsync(() -> {
+                    StockInfo stockInfo = new StockInfo();
+                    try {
+                        stockInfo = crawlStockInfoFromNaver(company);
+                    } catch (IOException e) {
+                        log.warn(e.getMessage());
+                    }
+                    return stockInfo;
+                }, executor))
+                .collect(Collectors.toList());
 
-            String crawlingUrl = NAVER_FINANCE_URL + "?itemcode=" + company.getCode();
+        List<StockInfo> stockInfoList = collect.stream().map(future -> {
+            StockInfo stockInfo = new StockInfo();
+            try {
+                stockInfo = future.get();
+            } catch (InterruptedException | ExecutionException e) {
+                log.warn(e.getMessage());
+            }
+            return stockInfo;
+        }).collect(Collectors.toList());
 
-            HttpURLConnection urlConnection = requestHttpRequest(crawlingUrl, "GET");
-            String json = convertInputStreamToString(urlConnection.getInputStream(), StandardCharsets.UTF_8.name());
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(json);
-
-            StockInfo stockInfo = new StockInfo.StockInfoBuilder(company.getCode(), company.getName())
-                    .marketSum(jsonNode.get("marketSum").asLong())
-                    .now(jsonNode.get("now").asLong())
-                    .diff(jsonNode.get("diff").asLong())
-                    .rate(jsonNode.get("rate").asDouble())
-                    .quantity(jsonNode.get("quant").asLong())
-                    .high(jsonNode.get("high").asLong())
-                    .low(jsonNode.get("low").asLong())
-                    .tradingTime(LocalDateTime.now())
-                    .build();
-
-            stockInfoList.add(stockInfo);
-        }
-
+        executor.shutdown();
         return stockInfoList;
     }
 
@@ -131,57 +133,26 @@ public class StockCrawler {
         return stockInfoList;
     }
 
-    public List<StockInfo> getStockInfoExecutionService(List<Company> companyList, int threadCount) throws IOException, ExecutionException, InterruptedException {
-
-        ExecutorService executor = Executors.newFixedThreadPool(threadCount);
-
-        List<CompletableFuture<StockInfo>> collect = companyList.parallelStream()
-                .map(company -> { return CompletableFuture.supplyAsync(() -> crawlStockInfoFromNaver(company), executor); })
-                .collect(Collectors.toList());
-
-        executor.shutdown();
-
-        return collect.stream().map(future -> {
-            StockInfo stockInfo = new StockInfo();
-            try {
-                stockInfo = future.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
-            return stockInfo;
-        }).collect(Collectors.toList());
-
-    }
-
-    public StockInfo crawlStockInfoFromNaver(Company company) {
+    public StockInfo crawlStockInfoFromNaver(Company company) throws IOException{
 
         String crawlingUrl = NAVER_FINANCE_URL + "?itemcode=" + company.getCode();
 
-        HttpURLConnection urlConnection = null;
-        StockInfo.StockInfoBuilder builder = new StockInfo.StockInfoBuilder(company.getCode(), company.getName());
-        try {
-            urlConnection = requestHttpRequest(crawlingUrl, "GET");
-            String json = convertInputStreamToString(urlConnection.getInputStream(), StandardCharsets.UTF_8.name());
+        HttpURLConnection urlConnection = requestHttpRequest(crawlingUrl, "GET");
+        String json = convertInputStreamToString(urlConnection.getInputStream(), StandardCharsets.UTF_8.name());
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(json);
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(json);
-
-            builder.marketSum(jsonNode.get("marketSum").asLong())
-                    .now(jsonNode.get("now").asLong())
-                    .diff(jsonNode.get("diff").asLong())
-                    .rate(jsonNode.get("rate").asDouble())
-                    .quantity(jsonNode.get("quant").asLong())
-                    .high(jsonNode.get("high").asLong())
-                    .low(jsonNode.get("low").asLong())
-                    .tradingTime(LocalDateTime.now())
-                    .build();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        return builder.build();
+        return new StockInfo.StockInfoBuilder(company.getCode(), company.getName())
+                .marketSum(jsonNode.get("marketSum").asLong())
+                .now(jsonNode.get("now").asLong())
+                .diff(jsonNode.get("diff").asLong())
+                .rate(jsonNode.get("rate").asDouble())
+                .quantity(jsonNode.get("quant").asLong())
+                .high(jsonNode.get("high").asLong())
+                .low(jsonNode.get("low").asLong())
+                .tradingTime(LocalDateTime.now())
+                .build();
     }
 
     public HttpURLConnection requestHttpRequest(String requestUrl, String requestMethod) throws IOException {
